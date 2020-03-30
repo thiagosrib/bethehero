@@ -12,6 +12,7 @@ export default function Detail() {
   const navigation = useNavigation();
   const route = useRoute();
   const incident = route.params.incident;
+  const currency = route.params.currency;
   const message = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso "${incident.title}" com o valor de ${Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(incident.value)}`;
 
   function navigateBack() {
@@ -28,9 +29,11 @@ export default function Detail() {
 
   function sendWhatsApp() {
     let whatsappNro = "";
-    if ((incident.whatsapp.length < 13) && (route.params.currency === 'BRL')) {
+
+    if ((incident.whatsapp.length < 13) && (currency === 'BRL')) {
       whatsappNro = "55" + incident.whatsapp;
     }
+
     Linking.openURL(`whatsApp://send?phone=${whatsappNro}&text=${message}`)
   }
 
